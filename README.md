@@ -1,5 +1,7 @@
-# in python3.7  dataclasses module exist
-# so new methods could be added to built-in class  without curse 
+
+    in python3.7  dataclasses module exist
+
+    so new methods could be added to built-in class  without curse 
 
 
 
