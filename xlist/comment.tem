@@ -1,0 +1,18 @@
+    '''init a list from start to end with a step interval
+
+    exzamples:
+
+    Parameters
+    ----------
+    start : int
+        start number
+    end   : int
+        end number,not included
+    step  : int
+        interval,default = 1
+
+    Returns
+    -------
+    list
+        
+    '''
