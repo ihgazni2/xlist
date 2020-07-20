@@ -386,3 +386,13 @@ def strlize(ol):
 
 
 
+
+def el2iteml(el,k):
+    iteml = list(map(lambda ele:ele.__getitem__(k),el))
+    return(iteml)
+
+def el2attrl(el,attr):
+    attrl = list(map(lambda ele:ele.__getattribute__(attr),el))
+    return(attrl)
+
+

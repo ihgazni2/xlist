@@ -258,3 +258,21 @@ def fltriv_with_dual(ol,fltr_func,index_fltr_func,fltr_func_other_args,index_flt
     return(rslt)
 
 
+
+####
+def lngth_lt(ol,lngth):
+    return(fltrv(ol,lambda v:len(v)<lngth))
+
+def lngth_le(ol,lngth):
+    return(fltrv(ol,lambda v:len(v)<=lngth))
+
+def lngth_eq(ol,lngth):
+    return(fltrv(ol,lambda v:len(v)==lngth))
+
+def lngth_ge(ol,lngth):
+    return(fltrv(ol,lambda v:len(v)>=lngth))
+
+def lngth_gt(ol,lngth):
+    return(fltrv(ol,lambda v:len(v)>lngth))
+
+

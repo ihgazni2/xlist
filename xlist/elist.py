@@ -7,500 +7,6 @@ import random
 # 为了避免循环import efuntool 只能单独引入一个函数
 
 
-def cond_select_all(ol,**kwargs):
-    '''
-        from elist.elist import *
-        from elist.jprint import pobj
-        def test_func(ele,x):
-            cond = (ele > x)
-            return(cond)
-
-        ol = [1,2,3,4,5,6,7]
-        rslt = cond_select_all(ol,cond_func = test_func,cond_func_args = [3])
-        pobj(rslt)
-    '''
-    cond_func = kwargs['cond_func']
-    if('cond_func_args' in kwargs):
-        cond_func_args = kwargs['cond_func_args']
-    else:
-        cond_func_args = []
-    ####
-    founded = find_all(ol,cond_func,*cond_func_args)
-    rslt = array_map(founded,lambda ele:ele['value'])
-    return(rslt)
-
-
-def cond_select_all2(ol,**kwargs):
-    '''
-        from elist.elist import *
-        from xdict.jprint import pobj
-        def test_func(ele,index,x):
-            cond1 = (ele > x)
-            cond2 = (index %2 == 0)
-            cond =(cond1 & cond2)
-            return(cond)
-
-        ol = [1,2,3,4,5,6,7]
-        rslt = cond_select_all2(ol,cond_func = test_func,cond_func_args = [3])
-        pobj(rslt)
-    '''
-    cond_func = kwargs['cond_func']
-    if('cond_func_args' in kwargs):
-        cond_func_args = kwargs['cond_func_args']
-    else:
-        cond_func_args = []
-    ####
-    founded = find_all2(ol,cond_func,*cond_func_args)
-    rslt = array_map(founded,lambda ele:ele['value'])
-    return(rslt)
-
-
-cond_select_values_all = cond_select_all
-cond_select_values_all2 = cond_select_all2
-
-
-def eqlength_select_values_all(ol,lngth):
-    return(cond_select_values_all(ol,cond_func=lambda ele:(ele.__len__()==lngth)))
-
-def gelength_select_values_all(ol,lngth):
-    return(cond_select_values_all(ol,cond_func=lambda ele:(ele.__len__()>=lngth)))
-
-def gtlength_select_values_all(ol,lngth):
-    return(cond_select_values_all(ol,cond_func=lambda ele:(ele.__len__()>lngth)))
-
-def lelength_select_values_all(ol,lngth):
-    return(cond_select_values_all(ol,cond_func=lambda ele:(ele.__len__()<=lngth)))
-
-def ltlength_select_values_all(ol,lngth):
-    return(cond_select_values_all(ol,cond_func=lambda ele:(ele.__len__()<lngth)))
-
-
-def cond_select_indexes_all(ol,**kwargs):
-    '''
-        from elist.elist import *
-        from elist.jprint import pobj
-        def test_func(ele,x):
-            cond = (ele > x)
-            return(cond)
-        
-        ol = [1,2,3,4,5,6,7]
-        rslt = cond_select_indexes_all(ol,cond_func = test_func, cond_func_args = [3])
-        pobj(rslt)
-    '''
-    cond_func = kwargs['cond_func']
-    if('cond_func_args' in kwargs):
-        cond_func_args = kwargs['cond_func_args']
-    else:
-        cond_func_args = []
-    ####
-    founded = find_all(ol,cond_func,*cond_func_args)
-    rslt = array_map(founded,lambda ele:ele['index'])
-    return(rslt)
-
-
-def cond_select_indexes_all2(ol,**kwargs):
-    '''
-        from elist.elist import *
-        from xdict.jprint import pobj
-        def test_func(ele,index,x):
-            cond1 = (ele > x)
-            cond2 = (index %2 == 0)
-            cond =(cond1 & cond2)
-            return(cond)
-
-        ol = [1,2,3,4,5,6,7]
-        rslt = cond_select_indexes_all2(ol,cond_func = test_func,cond_func_args = [3])
-        pobj(rslt)
-    '''
-    cond_func = kwargs['cond_func']
-    if('cond_func_args' in kwargs):
-        cond_func_args = kwargs['cond_func_args']
-    else:
-        cond_func_args = []
-    ####
-    founded = find_all2(ol,cond_func,*cond_func_args)
-    rslt = array_map(founded,lambda ele:ele['index'])
-    return(rslt)
-
-
-
-#######################################
-#swap and reindex
-########################################
-
-def iswap(arr,i1,i2,**kwargs):
-    if('deepcopy' in kwargs):
-        deepcopy = kwargs['deepcopy']
-    else:
-        deepcopy = True
-    if(deepcopy):
-        arr = copy.deepcopy(arr)
-    else:
-        pass
-    tmp = arr[i1]
-    arr[i1] = arr[i2]
-    arr[i2] = tmp
-    return(arr)
-
-
-def vswap(arr,v1,v2,**kwargs):
-    i1 = arr.index(v1)
-    i2 = arr.index(v2)
-    arr = iswap(arr,i1,i2,**kwargs)
-    return(arr)
-
-
-def reindex(arr,*nindexes,**kwargs):
-    if('deepcopy' in kwargs):
-        deepcopy = kwargs['deepcopy']
-    else:
-        deepcopy = True
-    if(deepcopy):
-        arr = copy.deepcopy(arr)
-    else:
-        pass
-    nindexes = list(nindexes)
-    if(isinstance(nindexes[0],list)):
-        nindexes = nindexes[0]
-    else:
-        nindexes = nindexes
-    tmp = copy.deepcopy(arr)
-    for i in range(nindexes.__len__()):
-        arr[nindexes[i]] = tmp[i]
-    return(arr)
-
-
-
-
-
-
-
-#####################################
-#
-######################################
-
-
-
-def setsome(ol,*args,**kwargs):
-    nl = newlist(ol,**kwargs)
-    args = list(args)
-    if(isinstance(args,list)):
-        indexes = args[0]
-        values = args[1]
-    else:
-        indexes = slct_odds(ol)
-        values = slct_evens(ol)
-    lngth = indexes.__len__()
-    for i in range(lngth):
-        index = indexes[i]
-        value = values[i]
-        nl[index] = value
-    return(nl)
-
-
-
-# class name initial is  uppercased 
-# vars 可以动态调用函数
-###############################
-
-def str_fuzzy_search(arr,k):
-    slcted = cond_select_values_all(arr,cond_func = lambda ele:(k in ele))
-    return(slcted)
-
-
-##############################
-
-#############################
-
-#cond_select_values
-##select (values) (via) cond_func(index,value,*cond_func_args)
-
-#cond_select = cond_select_values
-
-#cond_select_some = cond_select_values_via_some
-#cond_select_seqs = cond_select_values_via_seqs
-#cond_select_many = cond_select_values_via_manay
-
-#cond_select_indexes
-##select (values) (via) cond_func(index,value,*cond_func_args)
-#cond_select_indexes_some
-#cond_select_indexes_seqs
-#cond_select_indexes_many
-
-#def icond_select_all(ol,**kwargs):
-
-
-
-
-
-
-###################################################
-
-def append(ol,ele,**kwargs):
-    '''
-        from elist.elist import *
-        ol = [1,2,3,4]
-        ele = 5
-        id(ol)
-        append(ol,ele,mode="original")
-        ol
-        id(ol)
-        ####
-        ol = [1,2,3,4]
-        ele = 5
-        id(ol)
-        new = append(ol,ele)
-        new
-        id(new)
-    '''
-    if('mode' in kwargs):
-        mode = kwargs["mode"]
-    else:
-        mode = "new"
-    if(mode == "new"):
-        new = copy.deepcopy(ol)
-        new.append(ele)
-        return(new)
-    else:
-        ol.append(ele)
-        return(ol)
-
-def append_some(ol,*eles,**kwargs):
-    '''
-        from elist.elist import *
-        ol = [1,2,3,4]
-        id(ol)
-        append_some(ol,5,6,7,8,mode="original")
-        ol
-        id(ol)
-        ####
-        ol = [1,2,3,4]
-        id(ol)
-        new = append_some(ol,5,6,7,8)
-        new
-        id(new)
-    '''
-    if('mode' in kwargs):
-        mode = kwargs["mode"]
-    else:
-        mode = "new"
-    return(extend(ol,list(eles),mode=mode))
-
-
-def prepend(ol,ele,**kwargs):
-    '''
-        from elist.elist import *
-        ol = [1,2,3,4]
-        ele = 5
-        id(ol)
-        prepend(ol,ele,mode="original")
-        ol
-        id(ol)
-        ####
-        ol = [1,2,3,4]
-        ele = 5
-        id(ol)
-        new = prepend(ol,ele)
-        new
-        id(new)
-    '''
-    if('mode' in kwargs):
-        mode = kwargs["mode"]
-    else:
-        mode = "new"
-    if(mode == "new"):
-        new = [ele]
-        cpol = copy.deepcopy(ol)
-        new.extend(cpol)
-        return(new)
-    else:
-        length = ol.__len__()
-        ol.append(None)
-        for i in range(length-1,-1,-1):
-            ol[i+1] = ol[i]
-        ol[0] = ele
-        return(ol)
-
-def prepend_some(ol,*eles,**kwargs):
-    '''
-        from elist.elist import *
-        ol = [1,2,3,4]
-        id(ol)
-        prepend_some(ol,5,6,7,8,mode="original")
-        ol
-        id(ol)
-        ####
-        ol = [1,2,3,4]
-        id(ol)
-        new = prepend_some(ol,5,6,7,8)
-        new
-        id(new)
-        #####unshift is the same as prepend_some
-        >>> unshift(ol,9,10,11,12)
-        [9, 10, 11, 12, 1, 2, 3, 4]
-    '''
-    if('mode' in kwargs):
-        mode = kwargs["mode"]
-    else:
-        mode = "new"
-    return(prextend(ol,list(eles),mode=mode))
-
-unshift = prepend_some
-
-def extend(ol,nl,**kwargs):
-    '''
-        from elist.elist import *
-        ol = [1,2,3,4]
-        nl = [5,6,7,8]
-        id(ol)
-        extend(ol,nl,mode="original")
-        ol
-        id(ol)
-        ####
-        ol = [1,2,3,4]
-        nl = [5,6,7,8]
-        id(ol)
-        new = extend(ol,nl)
-        new
-        id(new)
-    '''
-    if('mode' in kwargs):
-        mode = kwargs["mode"]
-    else:
-        mode = "new"
-    if(mode == "new"):
-        new = copy.deepcopy(ol)
-        cpnl = copy.deepcopy(nl)
-        new.extend(cpnl)
-        return(new)
-    else:
-        ol.extend(nl)
-        return(ol)
-
-def push(ol,*eles,**kwargs):
-    '''
-        from elist.elist import *
-        ol=[1,2,3,4]
-        id(ol)
-        new = push(ol,5,6,7)
-        new
-        id(new)
-        ####
-        ol=[1,2,3,4]
-        id(ol)
-        rslt = push(ol,5,6,7,mode="original")
-        rslt
-        id(rslt)
-    '''
-    if('mode' in kwargs):
-        mode = kwargs['mode']
-    else:
-        mode = "new"
-    eles = list(eles)
-    return(extend(ol,eles,mode=mode))
-
-def prextend(ol,nl,**kwargs):
-    '''
-        from elist.elist import *
-        ol = [1,2,3,4]
-        nl = [5,6,7,8]
-        id(ol)
-        id(nl)
-        prextend(ol,nl,mode="original")
-        ol
-        id(ol)
-        ####
-        ol = [1,2,3,4]
-        nl = [5,6,7,8]
-        id(ol)
-        id(nl)
-        new = prextend(ol,nl)
-        new
-        id(new)
-    '''
-    if('mode' in kwargs):
-        mode = kwargs["mode"]
-    else:
-        mode = "new"
-    if(mode == "new"):
-        new = copy.deepcopy(nl)
-        cpol = copy.deepcopy(ol)
-        new.extend(cpol)
-        return(new)
-    else:
-        length = ol.__len__()
-        nl_len = nl.__len__()
-        for i in range(0,nl_len):
-            ol.append(None)
-        for i in range(length-1,-1,-1):
-            ol[i+nl_len] = ol[i]
-        for i in range(0,nl_len):
-            ol[i] = nl[i]
-        return(ol)
-
-def concat(*arrays):
-    '''
-        from elist.elist import *
-        l1 = [1,2,3]
-        l2 = ["a","b","c"]
-        l3 = [100,200]
-        id(l1)
-        id(l2)
-        id(l3)
-        arrays = [l1,l2,l3]
-        new = concat(arrays)
-        new
-        id(new)
-    '''
-    new = []
-    length = arrays.__len__()
-    for i in range(0,length):
-        array = copy.deepcopy(arrays[i])
-        new.extend(array)
-    return(new)
-
-concat_some = concat
-
-def concat_seqs(arrays):
-    '''
-        from elist.elist import *
-        l1 = [1,2,3]
-        l2 = ["a","b","c"]
-        l3 = [100,200]
-        id(l1)
-        id(l2)
-        id(l3)
-        arrays = [l1,l2,l3]
-        new = concat_seqs(arrays)
-        new
-        id(new)
-    '''
-    return(concat(*tuple(arrays)))
-
-
-
-def cons(head_ele,l,**kwargs):
-    '''
-        from elist.elist import *
-        ol=[1,2,3,4]
-        id(ol)
-        new = cons(5,ol)
-        new
-        id(new)
-        ####
-        ol=[1,2,3,4]
-        id(ol)
-        rslt = cons(5,ol,mode="original")
-        rslt
-        id(rslt)
-    '''
-    if('mode' in kwargs):
-        mode = kwargs['mode']
-    else:
-        mode = "new"
-    return(prepend(l,head_ele,mode=mode))
-
-
 def insert(ol,start_index,ele,**kwargs):
     '''
         from elist.elist import *
@@ -607,7 +113,7 @@ def insert_many(ol,eles,locs,**kwargs):
             pass
         else:
             locs[i] = uniform_index(locs[i],length)
-    tmp = sorted_refer_to(eles,locs)
+    tmp = sort_refer_to(eles,locs)
     eles = tmp['list']
     locs = tmp['referer']
     label = eles.__len__()
@@ -763,339 +269,7 @@ def insert_sections_many(ol,secs,locs,**kwargs):
         ol.extend(new)
         return(ol)
 
-####
-
-def reorder_sub(ol,sub):
-    '''
-        sub = ['query', 'params', 'fragment', 'path']
-        ol = ['scheme', 'username', 'password', 'hostname', 'port', 'path', 'params', 'query', 'fragment']
-        reorder_sub(ol,sub)
-    '''
-    def cond_func(ele,ol):
-        index = ol.index(ele)
-        return(index)
-    indexes = array_map(sub,cond_func,ol)
-    nsub = sorted_refer_to(sub,indexes)['list']
-    return(nsub)
-
-
-
-def sort(ol,**kwargs):
-    '''
-        from elist.elist import *
-        ol = [1,3,4,2]
-        id(ol)
-        new = sort(ol)
-        ol
-        new
-        id(ol)
-        id(new)
-        ####
-        ol = [1,3,4,2]
-        id(ol)
-        rslt = sort(ol,mode="original")
-        ol
-        rslt
-        id(ol)
-        id(rslt)
-    '''
-    if('mode' in kwargs):
-        mode = kwargs["mode"]
-    else:
-        mode = "new"
-    if(mode == "new"):
-        new = copy.deepcopy(ol)
-        new.sort()
-        return(new) 
-    else:
-        ol.sort()
-        return(ol)
-
-def sorted_refer_to(l,referer,reverse=False,**kwargs):
-    '''
-        from elist.elist import *
-        l = ["a","b","c"]
-        referer = [7,8,6]
-        sorted_refer_to(l,referer)
-        {'list': ['c', 'a', 'b'], 'referer': [6, 7, 8]}
-        l
-        referer
-        >>>
-    '''
-    if("mode" in kwargs):
-        mode = kwargs["mode"]
-    else:
-        mode = "both"
-    tl =[]
-    length = l.__len__()
-    for i in range(0,length):
-        ele = (l[i],referer[i])
-        tl.append(ele)
-    tl = sorted(tl,key=itemgetter(1),reverse=reverse)
-    sorted_l =[]
-    sorted_r = []
-    for i in range(0,length):
-        sorted_l.append(tl[i][0])
-        sorted_r.append(tl[i][1])
-    if(mode == "only-list"):
-        return(sorted_l)
-    elif(mode == "only-referer"):
-        return(referer)
-    else:
-        return({"list":sorted_l,"referer":sorted_r})
-
-def batsorted(referer,*lists,**kwargs):
-    '''
-        from elist.elist import *
-        referer = [4,2,3,1]
-        l1 = ['a','b','c','d']
-        l2 = [100,200,300,400]
-        l3 = ['A','B','A','B']
-        nl1,nl2,nl3 = batsorted(referer,l1,l2,l3)
-        nl1
-        nl2
-        nl3
-        nl1,nl2,nl3 = batsorted(referer,l1,l2,l3,reverse=True)
-        nl1
-        nl2
-        nl3
-        ####the batsorted will not modify the original lists
-        l1
-        l2
-        l3
-    '''
-    if('reverse' in kwargs):
-        reverse = kwargs['reverse']
-    else:
-        reverse = False
-    length = referer.__len__()
-    indexes = list(range(0,length))
-    rslt = sorted_refer_to(indexes,referer,reverse=reverse)
-    referer = rslt['referer']
-    indexes = rslt['list']
-    rslt = []
-    lists = copy.deepcopy(list(lists))
-    for i in range(0,lists.__len__()):
-        l = lists[i]
-        nl = []
-        for j in range(0,length):
-            loc = indexes[j]
-            nl.append(l[loc])
-        rslt.append(nl)
-    return(tuple(rslt))
-
-####
-
-def transpose(mat):
-    nmat = init(mat[0].__len__(),[])
-    nmat = mapv(nmat,lambda ele:init(mat.__len__(),None))
-    for i in range(mat.__len__()):
-        layer = mat[i]
-        for j in range(layer.__len__()):
-            nmat[j][i] = layer[j]
-    return(nmat)
-        
-
-
-def batexec(map_func,*params_lists):
-    params_lists = list(params_lists)
-    args_array = transpose(params_lists)
-    nl = []
-    for i in range(args_array.__len__()):
-        args = args_array[i]
-        nl.append(map_func(*args))
-    return(nl)
-
-
-####
-
-def sortDictList(dictList,**kwargs):
-    '''
-        students = [
-            {'name':'john','class':'A', 'year':15},
-            {'name':'jane','class':'B', 'year':12},
-            {'name':'dave','class':'B', 'year':10}
-        ]
-        
-        rslt = sortDictList(students,cond_keys=['name','class','year'])
-        pobj(rslt)
-        rslt = sortDictList(students,cond_keys=['name','year','class'])
-        pobj(rslt)
-        rslt = sortDictList(students,cond_keys=['class','name','year'])
-        pobj(rslt)
-        rslt = sortDictList(students,cond_keys=['class','year','name'])
-        pobj(rslt)
-        rslt = sortDictList(students,cond_keys=['year','name','class'])
-        pobj(rslt)
-        rslt = sortDictList(students,cond_keys=['year','name','class'])
-        pobj(rslt)
-    '''
-    def default_eq_func(value1,value2):
-        cond = (value1 == value2)
-        return(cond)
-    def default_gt_func(value1,value2):
-        cond = (value1 > value2)
-        return(cond)
-    def default_lt_func(value1,value2):
-        cond = (value1 < value2)
-        return(cond)
-    if('eq_func' in kwargs):
-        eq_func = kwargs['eq_func']
-    else:
-        eq_func = default_eq_func
-    if('gt_func' in kwargs):
-        gt_func = kwargs['gt_func']
-    else:
-        gt_func = default_gt_func
-    if('lt_func' in kwargs):
-        lt_func = kwargs['lt_func']
-    else:
-        lt_func = default_lt_func
-    if('reverse' in kwargs):
-        reverse = kwargs['reverse']
-    else:
-        reverse = False
-    keys = kwargs['cond_keys']
-    def cmp_dict(d1,d2):
-        '''
-        '''
-        length = keys.__len__()
-        for i in range(0,length):
-            key = keys[i]
-            cond = eq_func(d1[key],d2[key])
-            if(cond):
-                pass
-            else:
-                cond = gt_func(d1[key],d2[key])
-                if(cond):
-                    return(1)
-                else:
-                    return(-1)
-        return(0)
-    ndl = dictList
-    ndl = sorted(ndl,key=functools.cmp_to_key(cmp_dict),reverse=reverse)
-    return(ndl)
-
-
 ###############
-
-def lcstr(s0,s1):
-    len0 = len(s0)
-    len1 = len(s1)
-    slider_len = len1-1 + len0 + len1-1
-    label_s0_end = len1-1 + len0 + 1
-    label_s0_start = len1 
-    def get_si1_ei1(len1,label_s0_end,cursor):
-        si1 = len1-1-cursor 
-        si1 = 0 if(si1 <0) else si1
-        ei1 = len1 if((cursor+len1)<(label_s0_end)) else (label_s0_end-cursor-1)
-        return((si1,ei1))
-    def get_si0_ei0(len1,label_s0_start,label_s0_end,cursor):
-        si0 = 0 if(cursor <label_s0_start) else (cursor-len1+1)
-        ei0 = len0 if((cursor+len1)>=label_s0_end) else ((cursor+1))
-        return((si0,ei0))
-    def lcstr_for_same_length_array(arr0,arr1,lngth):
-        rslt = []
-        i = 0
-        si = None
-        while(i<lngth):
-            if(arr0[i] == arr1[i]):
-                if(si == None):
-                    si = i
-                else:
-                    pass
-            else:
-                if(si != None):
-                    t = (si,i)
-                    rslt.append(t)
-                    si = None
-                else:
-                    pass
-            i = i + 1
-        return(rslt)
-    def get_comm_substr(len0,len1,label_s0_end):
-        rslt = []
-        si1_begin = 0
-        si1_end = len1-1 + len0 + 1
-        si0_begin = len1-1
-        for cursor in range(si1_begin,si1_end):
-            si1,ei1 = get_si1_ei1(len1,label_s0_end,cursor)
-            si0,ei0 = get_si0_ei0(len1,label_s0_start,label_s0_end,cursor)
-            subs0 = s0[si0:ei0]
-            subs1 = s1[si1:ei1]
-            lngth = ei0 - si0
-            tmp = lcstr_for_same_length_array(subs0,subs1,lngth)
-            for each in tmp:
-                rsi,rei = each
-                cmms = subs0[rsi:rei]
-                if(len(cmms)==0):
-                    pass
-                else:
-                    d = {
-                        "pos0":(si0+rsi,si0+rei),
-                        "pos1":(si1+rsi,si1+rei),
-                        "s":cmms,
-                        "len":len(cmms)
-                    }
-                    rslt.append(d)
-            rslt = sortDictList(rslt,cond_keys=['len'])
-        return(rslt)
-    rslt = get_comm_substr(len0,len1,label_s0_end)
-    return(rslt)
-
-###############
-
-
-
-def sortDictList2(dictList,**kwargs):
-    '''
-        
-    '''
-    def default_eq_func(value1,value2):
-        cond = (value1 == value2)
-        return(cond)
-    def default_gt_func(value1,value2):
-        cond = (value1 > value2)
-        return(cond)
-    def default_lt_func(value1,value2):
-        cond = (value1 < value2)
-        return(cond)
-    keys = kwargs['cond_keys']
-    length = keys.__len__()
-    if('eq_funcs' in kwargs):
-        eq_funcs = kwargs['eq_funcs']
-    else:
-        eq_funcs = [default_eq_func] * length
-    if('gt_funcs' in kwargs):
-        gt_funcs = kwargs['gt_funcs']
-    else:
-        gt_funcs = [default_gt_func] * length
-    if('lt_funcs' in kwargs):
-        lt_funcs = kwargs['lt_funcs']
-    else:
-        lt_funcs = [default_lt_func] * length
-    def cmp_dict(d1,d2):
-        '''
-        '''
-        for i in range(0,length):
-            key = keys[i]
-            eq_func = eq_funcs[i]
-            cond = eq_func(d1[key],d2[key])
-            if(cond):
-                pass
-            else:
-                gt_func = gt_funcs[i]
-                cond = gt_func(d1[key],d2[key])
-                if(cond):
-                    return(1)
-                else:
-                    return(-1)
-        return(0)
-    ndl = dictList
-    ndl = sorted(ndl,key=functools.cmp_to_key(cmp_dict))
-    return(ndl)
-
-########
 
 ##group
 
@@ -2877,97 +2051,10 @@ def every2(ol,test_func,*args):
     return(rslt)
 
 
-###
-def loose_in(pl,k):
-    '''
-        pl = ['bcd','xabcxx','x','y']
-        loose_in(pl,'abc')
-        
-    '''
-    cond = some(pl,lambda ele:(k in ele))['cond']
-    return(cond)
+####
 
 
-def select_loose_in(pl,k):
-    '''
-        pl = ['bcd','xabcxx','x','y']
-        select_loose_in(pl,'abc')
-    '''
-    def cond_func(ele,index,k):
-        if(type(ele) == type([])):
-            cond = loose_in(ele,k)
-        else:
-            cond = (k in ele)
-        return(cond)
-    arr = cond_select_values_all2(pl,cond_func=cond_func, cond_func_args =[k])
-    return(arr)
-
-
-def select_strict_in(pl,k):
-    '''
-        pl = ['bcd','xabcxx','x','y']
-        select_strict_in(pl,'abc')
-    '''
-    def cond_func(ele,index,k):
-        if(type(ele) == type([])):
-            cond = (k in ele)
-        else:
-            cond = (k == ele)
-        return(cond)
-    arr = cond_select_values_all2(pl,cond_func=cond_func, cond_func_args =[k])
-    return(arr)
-
-
-
-def regex_in(pl,regex):
-    '''
-        regex = re.compile("^[a-z]+$")
-        pl = ['b1c3d','xab15cxx','1x','y2']
-        regex_in(pl,regex)
-        
-        regex = re.compile("^[0-9a-z]+$")
-        pl = ['b1c3d','xab15cxx','1x','y2']
-        regex_in(pl,regex)
-        
-    '''
-    def cond_func(ele,regex):
-        m = regex.search(ele)
-        if(m == None):
-            return(False)
-        else:
-            return(True)
-    cond = some(pl,cond_func,regex)['cond']
-    return(cond)
-
-
-def select_regex_in(pl,regex):
-    '''
-        regex = re.compile("^x.*x$")
-        pl = ['bcd','xabcxx','xx','y']
-        select_regex_in(pl,'abc')
-    '''
-    def cond_func(ele,index,regex):
-        if(type(ele)==type([])):
-            cond = regex_in(ele,regex)
-        else:
-            m = regex.search(ele)
-            if(m == None):
-                cond = False
-            else:
-                cond = True
-        return(cond)
-    arr = cond_select_values_all2(pl,cond_func=cond_func, cond_func_args =[regex])
-    return(arr)
-
-
-
-
-###
-
-
-
-
-
+####
 def some(ol,test_func,*args):
     '''
         from elist.elist import *
@@ -3127,169 +2214,6 @@ def same_values(l1,l2):
             rslt.append(l1[i])
     return(rslt)
 
-
-
-def cond_value_indexes_mapping(l,**kwargs):
-    '''
-        from elist.elist import *
-        l = [('BIGipServer', 'rd19'), ('TS013d8ed5', '0105b6b0'), ('BIGipServer', 'rd19'), ('TS013d8ed5', '0105b6b0'), ('SID', '1'), ('SID', '2')]
-        
-        def cond_func(ele,*args):
-            cond = ele[0]
-            return(cond)
-        
-        desc = cond_value_indexes_mapping(l,cond_func=cond_func)
-        pobj(desc)
-    
-    '''
-    cond_func = kwargs['cond_func']
-    if('cond_func_args' in kwargs):
-        cond_func_args = kwargs['cond_func_args']
-    else:
-        cond_func_args = []
-    if('with_none' in kwargs):
-        with_none = kwargs['with_none']
-    else:
-        with_none = False
-    desc = {}
-    for i in range(0,l.__len__()):
-        ele = l[i]
-        cond = cond_func(ele,*cond_func_args)
-        if((cond == None)&(not(with_none))):
-            pass
-        else:
-            if(cond in desc):
-                desc[cond].append(i)
-            else:
-                desc[cond] = [i]
-    return(desc)
-
-
-
-
-def getitem_via_pathlist(ol,pathlist):
-    '''
-        from elist.elist import *
-        y = ['a',['b',["bb"]],'c']
-        y[1][1]
-        getitem_via_pathlist(y,[1,1])
-    '''
-    this = ol
-    for i in range(0,pathlist.__len__()):
-        key = pathlist[i]
-        this = this.__getitem__(key)
-    return(this)
-
-def getitem_via_pathlist2(pathlist,ol):
-    '''
-        from elist.elist import *
-        y = ['a',['b',["bb"]],'c']
-        y[1][1]
-        getitem_via_pathlist2([1,1],y)
-    '''
-    this = ol
-    for i in range(0,pathlist.__len__()):
-        key = pathlist[i]
-        this = this.__getitem__(key)
-    return(this)
-
-def getitem_via_sibseqs(ol,*sibseqs):
-    '''
-        from elist.elist import *
-        y = ['a',['b',["bb"]],'c']
-        y[1][1]
-        getitem_via_sibseqs(y,1,1)
-    '''
-    pathlist = list(sibseqs)
-    this = ol
-    for i in range(0,pathlist.__len__()):
-        key = pathlist[i]
-        this = this.__getitem__(key)
-    return(this)
-
-
-
-#get_seqs
-#get_some
-
-
-
-
-def set_seqs(ol,indexes,values):
-    for i in range(indexes.__len__()):
-        ol[i] = values[i]
-    return(ol)
-
-def set_some(ol,*iv_tuples):
-    iv_tuples = list(iv_tuples)
-    for t in iv_tuples:
-        ol[t[0]] = t[1]
-    return(ol)
-
-
-
-
-def setitem_via_pathlist(ol,value,pathlist):
-    '''
-        from elist.elist import *
-        y = ['a',['b',["bb"]],'c']
-        y[1][1]
-        setitem_via_pathlist(y,"500",[1,1])
-        y
-    '''
-    this = ol
-    for i in range(0,pathlist.__len__()-1):
-        key = pathlist[i]
-        this = this.__getitem__(key)
-    this.__setitem__(pathlist[-1],value)
-    return(ol)
-
-def setitem_via_sibseqs(ol,value,*sibseqs):
-    '''
-        from elist.elist import *
-        y = ['a',['b',["bb"]],'c']
-        y[1][1]
-        setitem_via_sibseqs(y,"500",1,1)
-        y
-    '''
-    this = ol
-    pathlist = list(sibseqs)
-    for i in range(0,pathlist.__len__()-1):
-        key = pathlist[i]
-        this = this.__getitem__(key)
-    this.__setitem__(pathlist[-1],value)
-    return(ol)
-
-def delitem_via_pathlist(ol,pathlist):
-    '''
-        from elist.elist import *
-        y = ['a',['b',["bb"]],'c']
-        y[1][1]
-        delitem_via_pathlist(y,[1,1])
-        y
-    '''
-    this = ol
-    for i in range(0,pathlist.__len__()-1):
-        key = pathlist[i]
-        this = this.__getitem__(key)
-    this.__delitem__(pathlist[-1])
-    return(ol)
-
-def delitem_via_sibseqs(ol,*sibseqs):
-    '''
-        from elist.elist import *
-        y = ['a',['b',["bb"]],'c']
-        y[1][1]
-        delitem_via_sibseqs(y,1,1)
-        y
-    '''
-    pathlist = list(sibseqs)
-    this = ol
-    for i in range(0,pathlist.__len__()-1):
-        key = pathlist[i]
-        this = this.__getitem__(key)
-    this.__delitem__(pathlist[-1])
-    return(ol)
 
 ##
 
@@ -4177,11 +3101,6 @@ def rand_sub(arr,*args,**kwargs):
 
 #####
 
-def max_length(ol):
-    lngths = mapv(ol,len,[])
-    lngth = max(lngths)
-    return(lngth)
-
 
 #########set#####################
 
@@ -4860,7 +3779,7 @@ class DescMatrix():
             row = desc['depth']-1
         return([row,col])
     def pdesc(self,desc):
-        pd = getitem_via_pathlist(self.matrix,self.ploc(desc))
+        pd = get_via_pl(self.matrix,self.ploc(desc))
         return(pd)
 
 def fullfill_descendants_info(desc_matrix):
@@ -4940,67 +3859,6 @@ def fullfill_descendants_info(desc_matrix):
                 son['flat_offset'] = (si,ei)
                 si = ei
     return(desc_matrix,pathloc_mapping,locpath_mapping)
-
-def pathlist_to_getStr(path_list):
-    '''
-        >>> pathlist_to_getStr([1, '1', 2])
-            "[1]['1'][2]"
-        >>>
-    '''
-    t1 = path_list.__repr__()
-    t1 = t1.lstrip('[')
-    t1 = t1.rstrip(']')
-    t2 = t1.split(", ")
-    s = ''
-    for i in range(0,t2.__len__()):
-        s = ''.join((s,'[',t2[i],']'))
-    return(s)
-
-#pl path-list
-#gs get-string
-pl2gs = pathlist_to_getStr
-
-
-#
-
-#
-def getStr_to_pathlist(gs):
-    '''
-        gs = "[1]['1'][2]"
-        getStr_to_pathlist(gs)
-        gs = "['u']['u1']"
-        getStr_to_pathlist(gs)
-    '''
-    def numize(w):
-        try:
-            int(w)
-        except:
-            try:
-                float(w)
-            except:
-                return(w)
-            else:
-                return(float(w))
-        else:
-           return(int(w))
-    def strip_quote(w):
-        if(type(w) == type('')):
-            if(w[0]==w[-1]):
-                if((w[0]=="'") |(w[0]=='"')):
-                    return(w[1:-1])
-                else:
-                    return(w)
-            else:
-                return(w)
-        else:
-            return(w)
-    gs = gs[1:-1]
-    pl = gs.split("][")
-    pl = array_map(pl,numize)
-    pl = array_map(pl,strip_quote)
-    return(pl)
-
-gs2pl = getStr_to_pathlist
 
 ####from elist.jprint
 
@@ -5219,25 +4077,6 @@ def is_matrix(m,**kwargs):
         return(True)
 
 
-
-#
-
-def mat_mapv(mat,map_func,map_func_args=[]):
-    '''
-    '''
-    mmat = []
-    for i in range(0,mat.__len__()):
-        level = mat[i]
-        mmat.append([])
-        for j in range(0,level.__len__()):
-            value = level[j]
-            indexr = i
-            indexc = j
-            ele = map_func(value,*map_func_args)
-            mmat[i].append(ele)
-    return(mmat)
-
-
 #
 
 #dfs depth-first-search trace
@@ -5438,8 +4277,8 @@ class ListTree():
                 nrslt.append(pl)
             else:
                 pass
-        showl = array_map(nrslt,pathlist_to_getStr)
-        nrslt,showl = batsorted(nrslt,nrslt,showl)
+        showl = array_map(nrslt,pl_to_bracket_str)
+        nrslt,showl = bat_sort(nrslt,nrslt,showl)
         if(show):
             forEach(showl,print)
             self.showlog = ['tree -'+prompt+' :']
@@ -5476,14 +4315,14 @@ class ListTree():
             rslt = nlpls
         else:
             rslt = lpls+nlpls
-        showl = array_map(rslt,pathlist_to_getStr)
-        rslt,showl = batsorted(rslt,rslt,showl)
+        showl = array_map(rslt,pl_to_bracket_str)
+        rslt,showl = bat_sort(rslt,rslt,showl)
         forEach(showl,print)
         self.showlog = ['level -' +prompt+' ' +str(lvnum)+' :']
         self.showlog.extend(showl)
     def flatten(self):
         lpls = self.tree(leaf_only=True,show=False)
-        flat = array_map(lpls,getitem_via_pathlist2,self.list)
+        flat = array_map(lpls,get_via_pl2,self.list)
         return(flat)
     def include(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5491,7 +4330,7 @@ class ListTree():
         else:
             pl = list(sibseqs)
         try:
-            getitem_via_pathlist(self.list,pl)
+            get_via_pl(self.list,pl)
         except:
             return(False)
         else:
@@ -5499,7 +4338,7 @@ class ListTree():
     def __getitem__(self,*sibseqs):
         #this is a trick for __getitem__
         sibseqs = sibseqs[0]
-        return(getitem_via_sibseqs(self.list,*sibseqs))
+        return(get_via_sibseqs(self.list,*sibseqs))
     def loc(self,*sibseqs):
         pl = list(sibseqs)
         pk = tuple(pl)
@@ -5542,7 +4381,7 @@ class ListTree():
             pl = list(sibseqs)
         loc = self.path2loc(pl)
         ppl = self.desc[loc[0]][loc[1]]['parent_path']
-        value = getitem_via_pathlist(self.list,ppl)
+        value = get_via_pl(self.list,ppl)
         return(value)
     def parent_path(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5574,7 +4413,7 @@ class ListTree():
             rslt = nlpls
         else:
             rslt = lpls+nlpls
-        rslt,= batsorted(rslt,rslt)
+        rslt,= bat_sort(rslt,rslt)
         return(rslt)
     def sons(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5598,8 +4437,8 @@ class ListTree():
             rslt = nlpls
         else:
             rslt = lpls+nlpls
-        rslt,= batsorted(rslt,rslt)
-        rslt = array_map(rslt,getitem_via_pathlist2,self.list)
+        rslt,= bat_sort(rslt,rslt)
+        rslt = array_map(rslt,get_via_pl2,self.list)
         return(rslt)
     def descendant_paths(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5641,7 +4480,7 @@ class ListTree():
                 nrslt.append(pl)
             else:
                 pass
-        nrslt, = batsorted(nrslt,nrslt)
+        nrslt, = bat_sort(nrslt,nrslt)
         return(nrslt)
     def descendants(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5683,8 +4522,8 @@ class ListTree():
                 nrslt.append(pl)
             else:
                 pass
-        nrslt, = batsorted(nrslt,nrslt)
-        nrslt = array_map(nrslt,getitem_via_pathlist2,self.list)
+        nrslt, = bat_sort(nrslt,nrslt)
+        nrslt = array_map(nrslt,get_via_pl2,self.list)
         return(nrslt)
     @classmethod
     def ancestlize(cls,l,**kwargs):
@@ -5737,7 +4576,7 @@ class ListTree():
         locx,locy = tuple(self.path2loc(pl))
         p = copy.deepcopy(self.desc[locx][locy]['path'])
         anps = self.ancestlize(p,from_lv=from_lv,to_lv=to_lv)
-        ans = array_map(anps,getitem_via_pathlist2,self.list)
+        ans = array_map(anps,get_via_pl2,self.list)
         return(ans)
     def lsib_path(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5770,7 +4609,7 @@ class ListTree():
             to_lv = pl.__len__() - 2
         locx,locy = tuple(self.path2loc(pl))
         lsibp = copy.deepcopy(self.desc[locx][locy]['lsib_path'])
-        lsibv = getitem_via_pathlist(self.list,lsibp) 
+        lsibv = get_via_pl(self.list,lsibp) 
         return(lsibv)
     def rsib_path(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5803,7 +4642,7 @@ class ListTree():
             to_lv = pl.__len__() - 2
         locx,locy = tuple(self.path2loc(pl))
         rsibp = copy.deepcopy(self.desc[locx][locy]['rsib_path'])
-        rsibv = getitem_via_pathlist(self.list,rsibp) 
+        rsibv = get_via_pl(self.list,rsibp) 
         return(rsibv)
     def lcin_path(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5836,7 +4675,7 @@ class ListTree():
             to_lv = pl.__len__() - 2
         locx,locy = tuple(self.path2loc(pl))
         lcinp = copy.deepcopy(self.desc[locx][locy]['lcin_path'])
-        lcinv = getitem_via_pathlist(self.list,lcinp) 
+        lcinv = get_via_pl(self.list,lcinp) 
         return(lcinv)
     def rcin_path(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5869,7 +4708,7 @@ class ListTree():
             to_lv = pl.__len__() - 2
         locx,locy = tuple(self.path2loc(pl))
         rcinp = copy.deepcopy(self.desc[locx][locy]['rcin_path'])
-        rcinv = getitem_via_pathlist(self.list,rcinp) 
+        rcinv = get_via_pl(self.list,rcinp) 
         return(rcinv)
     def sib_paths(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5904,7 +4743,7 @@ class ListTree():
         locx,locy = tuple(self.path2loc(pl))
         ppl = self.desc[locx][locy]['parent_path']
         sibps = self.son_paths(pathlist=ppl,leaf_only=leaf_only,non_leaf_only=non_leaf_only)
-        sibvs = array_map(sibps,getitem_via_pathlist2,self.list)
+        sibvs = array_map(sibps,get_via_pl2,self.list)
         return(sibvs)
     def preceding_sib_paths(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5950,7 +4789,7 @@ class ListTree():
             pre = sibps
         else:
             pre = sibps[:seq]
-        sibvs = array_map(pre,getitem_via_pathlist2,self.list)
+        sibvs = array_map(pre,get_via_pl2,self.list)
         return(sibvs)
     def following_sib_paths(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -5997,7 +4836,7 @@ class ListTree():
             follow = sibps
         else:
             follow = sibps[(seq+1):]
-        sibvs = array_map(follow,getitem_via_pathlist2,self.list)
+        sibvs = array_map(follow,get_via_pl2,self.list)
         return(sibvs)
     def some_sib_paths(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -6042,7 +4881,7 @@ class ListTree():
         sibps = self.son_paths(pathlist=ppl,leaf_only=leaf_only,non_leaf_only=non_leaf_only)
         #sibps = select_some(sibps,some)
         sibps = select_seqs(sibps,some)
-        sibvs = array_map(sibps,getitem_via_pathlist2,self.list)
+        sibvs = array_map(sibps,get_via_pl2,self.list)
         return(sibvs)
     def which_sib_path(self,*sibseqs,**kwargs):
         if('pathlist' in kwargs):
@@ -6083,7 +4922,7 @@ class ListTree():
         seq = self.desc[locx][locy]['sib_seq']
         sibps = self.son_paths(pathlist=ppl,leaf_only=leaf_only,non_leaf_only=non_leaf_only)
         sibp = sibps[which]
-        sibv = getitem_via_pathlist(self.list,sibp)
+        sibv = get_via_pl(self.list,sibp)
         return(sibv)
     def search(self,value,**kwargs):
         if('leaf_only' in kwargs):
@@ -6120,14 +4959,14 @@ class ListTree():
             length = pl.__len__()
             cond1 = (length >= from_lv)
             cond2 = (length <= to_lv)
-            v = getitem_via_pathlist(self.list,pl)
+            v = get_via_pl(self.list,pl)
             cond3 = (v == value)
             if(cond1 & cond2 & cond3):
                 nrslt.append(pl)
             else:
                 pass
-        showl = array_map(nrslt,pathlist_to_getStr)
-        nrslt,showl = batsorted(nrslt,nrslt,showl)
+        showl = array_map(nrslt,pl_to_bracket_str)
+        nrslt,showl = bat_sort(nrslt,nrslt,showl)
         if(type(value)==type("")):
             vstr = '"' + str(value) + '"'
         else:
@@ -6179,7 +5018,7 @@ class ListTree():
             length = pl.__len__()
             cond1 = (length >= from_lv)
             cond2 = (length <= to_lv)
-            v = getitem_via_pathlist(self.list,pl)
+            v = get_via_pl(self.list,pl)
             cond3 = cond_func(v,pl,*cond_func_args)
             if(cond1 & cond2 & cond3):
                 nrslt.append(pl)
@@ -6188,9 +5027,9 @@ class ListTree():
                 pass
         def showlog_append(ele1,ele2,*args):
             return(ele1 + ' : ' + str(ele2))
-        showl = array_map(nrslt,pathlist_to_getStr)
+        showl = array_map(nrslt,pl_to_bracket_str)
         showl2 = array_map2(showl,nvs,map_func=showlog_append)
-        nrslt,showl = batsorted(nrslt,nrslt,showl)
+        nrslt,showl = bat_sort(nrslt,nrslt,showl)
         func_name = cond_func.__name__
         vstr = 'ele_value,ele_pathlist,' +str(cond_func_args)[1:-1]
         vstr = func_name + '(' + vstr + ')'
@@ -6244,72 +5083,4 @@ def find_fst_cmmnval(l0,l1,**kwargs):
     rslt = None if(rslt==None) else l0[rslt[0]]
     return(rslt)
 
-
-######
-
-def find_fst_indexpair_fstltsnd_via_reversing(arr):
-    lngth = len(arr)
-    for snd in range(lngth-1,0,-1):
-        fst = snd - 1
-        if(arr[fst]<arr[snd]):
-            return((fst,snd))
-        else:
-            pass
-    return(None)
-
-def find_fst_valuepair_fstltsnd_via_reversing(arr):
-    lngth = len(arr)
-    for snd in range(lngth-1,0,-1):
-        fst = snd - 1
-        if(arr[fst]<arr[snd]):
-            return((arr[fst],arr[snd]))
-        else:
-            pass
-    return(None)
-
-
-
-def find_fst_indexpair_fstgtsnd_via_reversing(arr):
-    lngth = len(arr)
-    for snd in range(lngth-1,0,-1):
-        fst = snd - 1
-        if(arr[fst]>arr[snd]):
-            return((fst,snd))
-        else:
-            pass
-    return(None)
-
-def find_fst_valuepair_fstgtsnd_via_reversing(arr):
-    lngth = len(arr)
-    for snd in range(lngth-1,0,-1):
-        fst = snd - 1
-        if(arr[fst]>arr[snd]):
-            return((arr[fst],arr[snd]))
-        else:
-            pass
-    return(None)
-
-
-
-def swap(i,j,arr):
-    tmp = arr[i]
-    arr[i] = arr[j]
-    arr[j] = tmp
-    return(arr)
-
-######
-
-
-
-
-#elelist
-
-
-def el2iteml(el,k):
-    iteml = elel.mapv(el,lambda ele:ele.__getitem__(k))
-    return(iteml)
-
-def el2attrl(el,attr):
-    attrl = elel.mapv(el,lambda ele:ele.__getattribute__(attr))
-    return(attrl)
 

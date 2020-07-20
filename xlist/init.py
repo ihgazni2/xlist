@@ -3,6 +3,8 @@ from .cmmn import inplace_wrapper
 from .cmmn import identity
 import copy
 import inspect
+from .slct import odds,evens
+
 
 def init(lngth,*args,**kwargs):
     deepcopy = kwargs['deepcopy'] if('deepcopy' in kwargs) else True
@@ -63,3 +65,22 @@ def lfrom(obj,*args,**kwargs):
 
 def of(*eles):
     return(list(eles))
+
+
+
+
+def from_one_list(ol,*args,**kwargs):
+    nl = ol
+    args = list(args)
+    if(isinstance(args,list)):
+        indexes = args[0]
+        values = args[1]
+    else:
+        indexes = slct.odds(ol)
+        values = slct.evens(ol)
+    lngth = indexes.__len__()
+    for i in range(lngth):
+        index = indexes[i]
+        value = values[i]
+        nl[index] = value
+    return(nl)

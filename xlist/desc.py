@@ -41,4 +41,15 @@ def table(l,**kwargs):
     return(dl)
 
 
+def vil_dict_after_vtrans(l,*other_args,trans_func=lambda r:r):
+    desc = {}
+    for i in range(0,l.__len__()):
+        ele = l[i]
+        nv = trans_func(ele,*other_args)
+        if(nv in desc):
+            desc[nv].append(i)
+        else:
+            desc[nv] = [i]
+    return(desc)    
+
 

@@ -51,6 +51,8 @@ init
 - def fill(ol,value,si=None,ei=None,**kwargs):
 - def lfrom(obj,*args,**kwargs):
 - def of(*eles):
+- def from_one_list(ol,*args,**kwargs):
+
 
 index
 ~~~~~
@@ -114,6 +116,10 @@ map
 - def for_eachiv_with_dual(ol,for_each_func,index_for_each_func,*for_each_func_other_args,*index_for_each_func_other_args):
 - def intlize(ol):
 - def strlize(ol):  
+- def el2iteml(el,k):
+- def el2attrl(el,attr):
+
+
 
 fltr
 ~~~~
@@ -134,7 +140,11 @@ fltr
 - def fltrv(ol,fltr_func,*other_args):
 - def fltro(ol,fltr_func,fltr_func_other_args_array):
 - def fltriv_with_dual(ol,fltr_func,index_fltr_func,*fltr_func_other_args,*index_fltr_func_other_args):
-
+- def lngth_lt(ol,lngth):
+- def lngth_le(ol,lngth):
+- def lngth_eq(ol,lngth):
+- def lngth_ge(ol,lngth):
+- def lngth_gt(ol,lngth):
 
 find
 ~~~~
@@ -223,12 +233,52 @@ desc
 - def vidict(arr):
 - def mirror_dict(arr):
 - def table(l,**kwargs):
+- def vil_dict_after_vtrans(l,*other_args,trans_func=lambda r:r):
+
+
+sarr
+~~~~
+- def fltrv_via_loose_in(arr,k):
+- def is_loose_in(arr,k):
+- def fltrv_via_loose_contain(arr,k):
+- def is_loose_contain(arr,k):
+- def fltrv_via_regex_match(arr,regex):
+- def is_regex_match(arr,regex):
+- def lcstr(s0,s1):
+
+
+getset
+~~~~~~
+- def get_via_pl(ol,pathlist):
+- def get_via_pl2(pathlist,ol):
+- def get_via_sibseqs(ol,*sibseqs):
+- def set_via_pl(ol,pathlist,value):
+- def set_via_sibseqs(ol,value,*sibseqs):
+- def del_via_pl(ol,pathlist):
+- def del_via_sibseqs(ol,*sibseqs):
+- def set_via_il_vl(ol,indexes,values):
+- def set_via_ivlist(ol,*iv_tuples):
+- def pl_to_bracket_str(path_list):
+- def bracket_str_to_pl(gs):
+
+
+
+
+
+pair
+~~~~
+- def find_lst_ipair_when_fstltsnd(arr):
+- def find_lst_vpair_when_fstltsnd(arr):
+- def find_lst_ipair_when_fstgtsnd(arr):
+- def find_lst_vpair_when_fstgtsnd(arr):
 
 
 
 util
 ~~~~
 - def fcp(ol):
+- def max_length(ol):
+
 
 cmmn
 ~~~~
