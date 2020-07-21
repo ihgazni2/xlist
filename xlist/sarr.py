@@ -125,3 +125,70 @@ def lcstr(s0,s1):
         return(rslt)
     rslt = get_comm_substr(len0,len1,label_s0_end)
     return(rslt)
+
+
+
+def join(ol,separator=","):
+    if(ol.__len__() == 0):
+        return("")
+    else:
+        pass
+    cond = (type(ol[0])==type(b''))
+    if(cond):
+        rslt = b''
+    else:
+        rslt =""
+    length = ol.__len__()
+    for i in range(0,length-1):
+        ele = ol[i]
+        if(cond):
+            pass
+        else:
+            ele = str(ele)
+        rslt = rslt + ele + separator
+    if(cond):
+        rslt = rslt + ol[length - 1]
+    else:
+        rslt = rslt + str(ol[length - 1])
+    return(rslt)
+
+
+
+def join_with_sp_list(ol,*sps):
+    rslt =""
+    length = ol.__len__()
+    for i in range(0,length-1):
+        rslt = rslt + str(ol[i]) + sps[i]
+    rslt = rslt + str(ol[length - 1])
+    return(rslt)
+
+
+
+def htmljoin(ol,sp,**kwargs):
+    '''
+        ol = [1,2,3,4]
+        htmljoin(ol,"option",outer="select")
+
+    '''
+    if('outer' in kwargs):
+        outer = kwargs['outer']
+    else:
+        outer = ""
+    if(outer):
+        head = "<" + outer + ">"
+        tail = "</" + outer + ">"
+    else:
+        head = ""
+        tail = ""
+    rslt = head
+    length = ol.__len__()
+    begin = "<" + sp + ">"
+    end = "</" + sp + ">"
+    for i in range(0,length):
+        rslt = rslt + begin + str(ol[i]) + end
+    rslt = rslt + tail
+    return(rslt)
+
+
+
+

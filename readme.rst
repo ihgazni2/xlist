@@ -19,6 +19,32 @@ Usage
     
     ::
         
+        from xdict.jprint import pobj
+        from xdict.jprint import pdir
+        from xlist.nest import ListTree
+        l = [1, [4], 2, [3, [5, 6]]]
+        ltree = ListTree(l)
+        >>> ltree
+        [1, [4], 2, [3, [5, 6]]]
+         1, [4], 2, [3, [5, 6]]
+             4       3, [5, 6]
+                         5, 6
+        >>> ltree.tree()
+        [0]
+        [1]
+        [1][0]
+        [2]
+        [3]
+        [3][0]
+        [3][1]
+        [3][1][0]
+        [3][1][1]
+        [[0], [1], [1, 0], [2], [3], [3, 0], [3, 1], [3, 1, 0], [3, 1, 1]]
+        >>>
+        
+        >>> ltree.flatten()
+        [1, 4, 2, 3, 5, 6]
+        >>>
 
 
 APIS
@@ -118,7 +144,8 @@ map
 - def strlize(ol):  
 - def el2iteml(el,k):
 - def el2attrl(el,attr):
-
+- def reduce_left(ol,callback,initialValue):
+- def reduce_right(ol,callback,initialValue):
 
 
 fltr
@@ -261,7 +288,97 @@ getset
 - def pl_to_bracket_str(path_list):
 - def bracket_str_to_pl(gs):
 
+crud
+~~~~
+- def append(ol,ele,**kwargs):
+- def push(ol,ele,**kwargs):
+- def append_some(ol,*eles,**kwargs):
+- def prepend(ol,ele,**kwargs):
+- def extend(ol,nl,**kwargs):
+- def prextend(ol,nl,**kwargs):
+- def prepend_some(ol,*eles,**kwargs):
+- def unshift(ol,*eles,**kwargs):
+- def concat(*arrays,**kwargs):
+- def cons(head_ele,l,**kwargs):
+- def insert(ol,start_index,ele,**kwargs):
+- def insert_some(ol,start_index,*eles,**kwargs):
+- def insert_many(ol,eles,locs,**kwargs):
+- def insert_section(ol,sec,loc,**kwargs):
+- def insert_sections_some(ol,*secs,**kwargs):
+- def insert_sections_many(ol,secs,locs,**kwargs):
+- def repeat_every(l,times):
+- def apadding(l,lngth,val):
+- def prepadding(l,lngth,val):
+- def pop(ol,index,**kwargs):
+- def shift(ol,**kwargs):
+- def cond_pop(ol,index,**kwargs):
+- def pop_range(ol,start_index,end_index,**kwargs):
+- def pop_some(ol,*indexes,**kwargs):
+- def another_pop_some(l,*seqs):
+- def rm_fst(ol,value,**kwargs):
+- def rm_fst_not(ol,value,**kwargs):
+- def rm_lst(ol,value,**kwargs):
+- def rm_lst_not(ol,value,**kwargs):
+- def rm_which(ol,value,which,**kwargs):
+- def rm_which_not(ol,value,which,**kwargs):
+- def rm_some(ol,value,*seqs,**kwargs):
+- def rm_some_not(ol,value,*seqs,**kwargs):
+- def rm_all(ol,value,**kwargs):
+- def rm_all_not(ol,value,**kwargs):
+- def rm_many(ol,values,seqs,**kwargs):
+- def rm_many_not(ol,values,seqs,**kwargs):
+- def reverse(ol,**kwargs):
+- def splice(ol,start,deleteCount,*eles,**kwargs):
+- def interleave(*arrays,**kwargs):
+- def deinterleave(ol,gnum):
+- def split(ol,value,*whiches,**kwargs):
+- def repl_some(ol,value,*indexes,**kwargs)
+- def repl_some_eq(ol,src_value,dst_value,*seqs,**kwargs):
+- def repl_fst_eq(ol,src_value,dst_value,**kwargs):
+- def repl_lst_eq(ol,src_value,dst_value,**kwargs):
+- def repl_which_eq(ol,src_value,dst_value,which,**kwargs):
+- def repl_all_eq(ol,src_value,dst_value,**kwargs):
+- def cond_repl_some(ol,cond_func,dst_value,*seqs,**kwargs):
+- def cond_repl_which(ol,cond_func,dst_value,which,**kwargs):
+- def cond_repl_fst(ol,cond_func,dst_value,**kwargs):
+- def cond_repl_lst(ol,cond_func,dst_value,**kwargs):
+- def cond_repl_all(ol,cond_func,dst_value,**kwargs):
 
+
+
+range
+~~~~~
+- def compress(ol):
+- def decompress(cl):
+- def spanize(break_points,length):
+- def fullfill_spans(spans,lngth):
+- def get_supplement_of_spans(spans,lngth):
+- def get_span_loc(spans,word_loc):
+- def broke_via_seqs(ol,break_points):
+- def broke_via_some(ol,*break_points):
+- def where_index_interval(ol,value):
+- def where_value_interval(ol,value):
+- def upper_bound(ol,value):
+- def lower_bound(ol,value):
+- def chunk(ol,interval):
+
+
+two
+~~~
+- def comprise(list1,list2,**kwargs):
+- def diff_indexes(l1,l2):
+- def diff_values(l1,l2):
+- def same_indexes(l1,l2):
+- def same_values(l1,l2):
+- def intersection(ol1,ol2):
+- def shorter(ol1,ol2):
+- def longer(ol1,ol2):
+- def ordered_intersection(ol1,ol2):
+- def fullinfo_intersection(ol1,ol2,**kwargs):
+- def union(ol1,ol2):
+- def difference(ol1,ol2):
+- def fst_cmmn_val_index(l0,l1,**kwargs):
+- def fst_cmmn_val(l0,l1,**kwargs):
 
 
 
@@ -278,7 +395,13 @@ util
 ~~~~
 - def fcp(ol):
 - def max_length(ol):
-
+- def entries(ol):
+- def includes(ol,value):
+- def to_str(ol):
+- def to_src(ol):
+- def every(ol,test_func,*args,**kwargs):
+- def any(ol,test_func,*args,**kwargs):
+- def combinations(arr,*args):
 
 cmmn
 ~~~~
@@ -288,6 +411,77 @@ cmmn
 - def identity(obj):
 - def dflt_kwargs(k,dflt,**kwargs):
 
+
+rand
+~~~~
+- def rand_some_indexes(si,ei,n,**kwargs):
+- def rand_sub(arr,*args,**kwargs):
+
+
+nest
+~~~~
+- class ListTree():
+- ltree.ancestlize(           
+- ltree.ancestor_paths(       
+- ltree.ancestors(            
+- ltree.cond_search(          
+- ltree.depth                 
+- ltree.desc                  
+- ltree.descendant_paths(     
+- ltree.descendants(          
+- ltree.dig(                  
+- ltree.flatWidth             
+- ltree.flatten(              
+- ltree.followingSibPaths(    
+- ltree.followingSibs(        
+- ltree.following_sib_paths(  
+- ltree.following_sibs(       
+- ltree.include(              
+- ltree.lcin(                 
+- ltree.lcin_path(            
+- ltree.level(                
+- ltree.list                  
+- ltree.loc(                  
+- ltree.loc2path(             
+- ltree.locpath_mapping       
+- ltree.lsib(                 
+- ltree.lsib_path(            
+- ltree.maxLevelWidth         
+- ltree.nextSibPath(          
+- ltree.nextSibling(          
+- ltree.parent(               
+- ltree.parent_path(          
+- ltree.path(                 
+- ltree.path2loc(             
+- ltree.pathloc_mapping       
+- ltree.precedingSibPaths(    
+- ltree.precedingSibs(        
+- ltree.preceding_sib_paths(  
+- ltree.preceding_sibs(       
+- ltree.prevSibPath(          
+- ltree.prevSibling(          
+- ltree.rcin(                 
+- ltree.rcin_path(
+- ltree.rsib(
+- ltree.rsib_path(
+- ltree.search(
+- ltree.showlog
+- ltree.showroute(
+- ltree.sib_paths(
+- ltree.sibs(
+- ltree.someSibPaths(
+- ltree.someSibs(
+- ltree.some_sib_paths(
+- ltree.some_sibs(
+- ltree.son_paths(
+- ltree.sons(
+- ltree.total
+- ltree.trace
+- ltree.tree(
+- ltree.whichSib(
+- ltree.whichSibPath(
+- ltree.which_sib(
+- ltree.which_sib_path(
 
 License
 =======

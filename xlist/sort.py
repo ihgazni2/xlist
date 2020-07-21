@@ -1,3 +1,5 @@
+import copy
+from operator import itemgetter
 from .cmmn import inplace_wrapper
 from .map import mapv
 

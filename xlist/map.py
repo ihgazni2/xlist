@@ -396,3 +396,21 @@ def el2attrl(el,attr):
     return(attrl)
 
 
+
+
+def reduce_left(ol,callback,initialValue):
+    length = ol.__len__()
+    accumulator = initialValue
+    for i in range(0,length):
+        accumulator = callback(accumulator,ol[i])
+    return(accumulator)
+
+
+def reduce_right(ol,callback,initialValue):
+    length = ol.__len__()
+    accumulator = initialValue
+    for i in range(length-1,-1,-1):
+        accumulator = callback(accumulator,ol[i])
+    return(accumulator)
+
+
