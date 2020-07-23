@@ -4,7 +4,8 @@ from .cmmn  import inplace_wrapper
 from .index import uniform_index,indexes_all
 from .sort  import sort_refer_to
 from .fltr  import fltrv
-
+from .util  import uniqulaize
+from .crud  import append,prepend
 
 def compress(ol):
     '''
