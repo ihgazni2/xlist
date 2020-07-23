@@ -1,3 +1,4 @@
+import copy
 from .slct  import some_keeping_order,some
 from .index import uniform_index
 
