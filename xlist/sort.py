@@ -2,7 +2,7 @@ import copy
 from operator import itemgetter
 from .cmmn import inplace_wrapper
 from .map import mapv
-
+import functools
 
 @inplace_wrapper
 def sort(ol,**kwargs):
